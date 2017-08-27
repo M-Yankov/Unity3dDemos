@@ -58,9 +58,10 @@ GameObject:
   - component: {fileID: 23898006711614742}
   - component: {fileID: 54830326378200638}
   - component: {fileID: 114921528723287250}
+  - component: {fileID: 114161727175170322}
   m_Layer: 10
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,6 +227,17 @@ MonoBehaviour:
   bulletTemplate: {fileID: 1008158991097170, guid: 2a34b0f8d23386f43bf1776577b9f9ce,
     type: 2}
   fireTimeInSeconds: 1
+--- !u!114 &114161727175170322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788401047145022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f162e4c06cd33f44ca75687cae5f563a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114921528723287250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,8 +250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimSpeed: 5
-  defense: 3
-  health: 100
+  defense: 60
+  health: 500
 --- !u!136 &136730349518487758
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -21,8 +21,8 @@ public class EnemyScript : MonoBehaviour
     {
         if (this.player != null)
         {
-            var direction = this.player.transform.position - this.transform.position;
-            this.rBody.rotation = Quaternion.Slerp(this.rBody.rotation, Quaternion.LookRotation(direction), aimSpeed * Time.deltaTime);
+            Vector3 direction = this.player.transform.position - this.transform.position;
+            this.rBody.rotation = Quaternion.Slerp(this.rBody.rotation, Quaternion.LookRotation(direction), this.aimSpeed * Time.deltaTime);
         }
         else
         {

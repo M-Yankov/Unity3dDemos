@@ -19,13 +19,13 @@ public class EnemyfireScript : MonoBehaviour
     void Update()
     {
         PlayerController playerController = this.player.GetComponent<PlayerController>();
-        currentTime += Time.deltaTime;
+        this.currentTime += Time.deltaTime;
 
-        if (currentTime > this.fireTimeInSeconds && playerController.IsAlive())
+        if (this.currentTime > this.fireTimeInSeconds && playerController.IsAlive())
         {
             GameObject bullet = Instantiate(this.bulletTemplate, this.bulletSpawnPoint.transform.position, this.bulletSpawnPoint.transform.rotation);
             Destroy(bullet, 3);
-            currentTime = 0;
+            this.currentTime = 0;
         }
     }
 }

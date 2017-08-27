@@ -12,6 +12,7 @@ public class DoorOpenScript : MonoBehaviour
     private GameObject lastObjectInteracted;
     private Rigidbody rBody;
 
+
     // Use this for initialization
     void Start()
     {
@@ -22,18 +23,18 @@ public class DoorOpenScript : MonoBehaviour
     {
         if (this.doorState == DoorState.Opening) //this.doorState == DoorState.Closed
         {
+            Quaternion doorOpen = Quaternion.Euler(0, 93f, 0);
             this.rBody.isKinematic = false;
             this.doorState = DoorState.Opening;
-            var doorOpen = Quaternion.Euler(0, 93f, 0);
-            this.rBody.rotation = Quaternion.Slerp(transform.localRotation, doorOpen, Time.deltaTime * this.doorSpeed);
+            this.rBody.rotation = Quaternion.Slerp(this.transform.localRotation, doorOpen, Time.deltaTime * this.doorSpeed);
         }
 
         if (this.doorState == DoorState.Closing) // this.doorState == DoorState.Opened
         {
             this.rBody.isKinematic = false;
             this.doorState = DoorState.Closing;
-            var doorClose = Quaternion.Euler(0, 0f, 0);
-            this.rBody.rotation = Quaternion.Slerp(transform.localRotation, doorClose, Time.deltaTime * this.doorSpeed);
+            Quaternion doorClose = Quaternion.Euler(0, 0f, 0);
+            this.rBody.rotation = Quaternion.Slerp(this.transform.localRotation, doorClose, Time.deltaTime * this.doorSpeed);
         }
 
         SwitchDoorState();
@@ -68,12 +69,13 @@ public class DoorOpenScript : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
-        if (Input.GetMouseButton(0) && doorState == DoorState.Closed)
+        bool isPlayer = collision.gameObject.tag == "Player";
+        if (Input.GetMouseButton(0) && this.doorState == DoorState.Closed && isPlayer)
         {
             this.doorState = DoorState.Opening;
         }
 
-        if (collision.gameObject.tag == "Player")
+        if (isPlayer)
         {
             this.lastObjectInteracted = null;
         }
@@ -81,7 +83,7 @@ public class DoorOpenScript : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (objectsInteracted.Count == 1)
+        if (this.objectsInteracted.Count == 1)
         {
             this.lastObjectInteracted = collision.gameObject;
         }

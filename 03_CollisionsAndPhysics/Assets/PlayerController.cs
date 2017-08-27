@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public UnityEngine.UI.Text healthText;
     public float mouseSensitive = 1;
     public float defense = 50;
+    public Text respawnText;
 
     public float health = 100;
     private Vector3 horizontalMovement;
@@ -19,7 +21,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        rBody = this.gameObject.GetComponent<Rigidbody>();
+        this.rBody = this.gameObject.GetComponent<Rigidbody>();
         Cursor.visible = false;
     }
 
@@ -32,11 +34,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey("up") || Input.GetKey("w"))
         {
-            this.verticalMovemnt = this.transform.forward * speed;
+            this.verticalMovemnt = this.transform.forward * this.speed;
         }
         else if (Input.GetKey("down") || Input.GetKey("s"))
         {
-            this.verticalMovemnt = -this.transform.forward * speed;
+            this.verticalMovemnt = -this.transform.forward * this.speed;
         }
         else
         {
@@ -45,11 +47,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey("left") || Input.GetKey("a"))
         {
-            this.horizontalMovement = -this.transform.right * speed;
+            this.horizontalMovement = -this.transform.right * this.speed;
         }
         else if (Input.GetKey("right") || Input.GetKey("d"))
         {
-            this.horizontalMovement = this.transform.right * speed;
+            this.horizontalMovement = this.transform.right * this.speed;
         }
         else
         {
@@ -68,10 +70,11 @@ public class PlayerController : MonoBehaviour
             }
             else if(respawnState == RespawingState.RespawnFinished)
             {
+                this.respawnText.enabled = true;
                 // make body lying like death
                 const float deathSpeed = 6f;
-                Quaternion deathPosition = Quaternion.Euler(270f, 0, 0);
-                this.rBody.rotation = Quaternion.Slerp(transform.localRotation, deathPosition, Time.deltaTime * deathSpeed);
+                Quaternion deathPosition = Quaternion.Euler(270f, this.rBody.transform.rotation.eulerAngles.y, 0);
+                this.rBody.rotation = Quaternion.Slerp(this.transform.localRotation, deathPosition, Time.deltaTime * deathSpeed);
             }
             return;
         }

@@ -27,16 +27,19 @@ public class RespawnScript : MonoBehaviour
         if (this.respawnState == RespawingState.Respawning)
         {
             this.rBody.AddForce(this.rBody.transform.up * -1, ForceMode.Force);
-            var currentAngles = this.rBody.transform.rotation.eulerAngles;
+            Vector3 currentAngles = this.rBody.transform.rotation.eulerAngles;
             if (currentAngles.x != 0 || currentAngles.y != 0 || currentAngles.z != 0)
             {
                 this.transform.rotation = Quaternion.Euler(0, this.rBody.rotation.eulerAngles.y, this.rBody.rotation.eulerAngles.z);
             }
-
         }
 
         if (this.currentTime > this.respawnSeconds)
         {
+            // hide respawn message
+            PlayerController playerController = this.GetComponent<PlayerController>();
+            playerController.respawnText.enabled = false;
+
             this.respawnState = RespawingState.Respawning;
             this.rBody.transform.position = new Vector3(this.rBody.transform.position.x, this.respawnHeight, this.rBody.transform.position.z);
             this.currentTime = 0;
