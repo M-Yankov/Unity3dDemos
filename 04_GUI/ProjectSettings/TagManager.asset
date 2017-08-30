@@ -10,6 +10,9 @@ TagManager:
   - Enemy
   - ScoreManager
   - MenuCamera
+  - ButtonsWrapper
+  - Setting
+  - Tree
   layers:
   - Default
   - TransparentFX
