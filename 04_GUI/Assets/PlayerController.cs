@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float mouseSensitive = 1;
     public float defense = 50;
     public Text respawnText;
+    public Difficulty difficulty = Difficulty.Easy;
 
     public float health = 100;
     private Vector3 horizontalMovement;
@@ -97,6 +98,10 @@ public class PlayerController : MonoBehaviour
         {
             BulletScript bulletScript = collision.gameObject.GetComponent<BulletScript>();
             float damage = bulletScript.damage - (this.defense / 100);
+
+            float additionalDamagePercentage = this.GetDamagePercentageFromDifficulty(this.difficulty);
+            damage += (damage * additionalDamagePercentage);
+
             this.health -= damage;
             if (this.health < 0)
             {
@@ -140,5 +145,20 @@ public class PlayerController : MonoBehaviour
     public void SetAlive(bool isAlive)
     {
         this.isDeath = !isAlive;
+    }
+
+    private float GetDamagePercentageFromDifficulty (Difficulty difficulty)
+    {
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                return 0;
+            case Difficulty.Medium:
+                return 0.2f;
+            case Difficulty.Hard:
+                return 10f;
+            default:
+                return 0;
+        }
     }
 }
